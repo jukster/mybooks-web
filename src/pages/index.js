@@ -18,6 +18,8 @@ function HomePage({ session }) {
 export async function getServerSideProps(context) {
   const session = await getSession(context);
 
+  console.log("Session data:", session); // Add this line to log session data
+
   return {
     props: {
       session,
