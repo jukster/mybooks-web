@@ -1,30 +1,35 @@
-import { getSession } from "next-auth/react";
+import { useEffect, useState } from 'react';
+import { supabase } from '../supabaseClient';
 import BookList from "../components/BookList";
 
-function HomePage({ session }) {
+export default function Home() {
+  const [session, setSession] = useState(null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   if (!session) {
-    return <p>Access Denied</p>;
+    return <div>Not authenticated</div>;
   }
 
   return (
     <div>
-      <h1>Welcome {session.user.name}!</h1>
+      <h1>Welcome {user?.user_metadata?.full_name || user?.email || 'User'}!</h1>
       <BookList />
-      {/* Rest of your component */}
     </div>
   );
 }
-
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-
-  console.log("Session data:", session); // Add this line to log session data
-
-  return {
-    props: {
-      session,
-    },
-  };
-}
-
-export default HomePage;
