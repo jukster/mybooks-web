@@ -1,18 +1,28 @@
-// src/pages/index.js
-import BookList from '../components/BookList';
-import { useSession } from 'next-auth/react';
+import { getSession } from "next-auth/react";
+import BookList from "../components/BookList";
 
-export default function Home() {
-  const { data: session } = useSession();
+function HomePage({ session }) {
+  if (!session) {
+    return <p>Access Denied</p>;
+  }
 
   return (
     <div>
-      {session ? (
-        <h1>Welcome, {session.user.name}!</h1>
-      ) : (
-        <h1>Welcome, Guest!</h1>
-      )}
+      <h1>Welcome {session.user.name}!</h1>
       <BookList />
+      {/* Rest of your component */}
     </div>
   );
 }
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  return {
+    props: {
+      session,
+    },
+  };
+}
+
+export default HomePage;
