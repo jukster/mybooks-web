@@ -1,6 +1,9 @@
 import BookList from "../components/BookList";
 import SignIn from "../components/SignIn";
 import useAuth from "../hooks/useAuth";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Component for authenticated view
 function AuthenticatedView({ user, onSignOut }) {
