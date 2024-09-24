@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '../supabaseClient';
 import BookList from "../components/BookList";
 import SignIn from "../components/SignIn";
 import useAuth from "../hooks/useAuth";
