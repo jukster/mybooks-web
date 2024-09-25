@@ -9,7 +9,7 @@ dotenv.config();
 function AuthenticatedView({ user, onSignOut }) {
   return (
     <div>
-      <h1>Welcome {user?.user_metadata?.full_name || user?.email || 'User'}!</h1>
+      <h1>Welcome {user.user_metadata.full_name || 'User'}!</h1>
       <button onClick={onSignOut}>Sign Out</button>
       <BookList />
     </div>
