@@ -7,11 +7,19 @@ dotenv.config();
 
 // Component for authenticated view
 function AuthenticatedView({ user, onSignOut }) {
+
+  const firstName = user.user_metadata.full_name?.split(' ')[0] || 'User';
+
   return (
-    <div>
-      <h1 className="text-2xl font-bold underline">Welcome {user.user_metadata.full_name || 'User'}!</h1>
-      <button onClick={onSignOut}>Sign Out</button>
-      <BookList />
+    <div className="relative">
+      <div className="absolute top-0 right-0 text-right">{user.user_metadata.email}</div>
+      <button 
+        className="absolute top-4 right-4 py-2 px-4 border border-gray-300 rounded hover:bg-gray-100" 
+        onClick={onSignOut}
+      >
+        Sign Out
+      </button>
+      <BookList firstName={firstName} />
     </div>
   );
 }
