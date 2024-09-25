@@ -29,7 +29,7 @@ const BookList = () => {
             )
           `)
           .eq('user_id', user.id)
-          .order('id', { ascending: false });
+          .order('id', { ascending: false }); // stopping here. Maybe fetch all and then get the right one client side?
 
         if (error) throw error;
         setBooks(data);
