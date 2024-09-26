@@ -4,7 +4,6 @@ import { supabase } from '../../lib/supabaseClient';
 import Link from 'next/link';
 import BookActions from '../../components/BookActions';
 
-
 const BookDetail = () => {
   const router = useRouter();
   const { id } = router.query;

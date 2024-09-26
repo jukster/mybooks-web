@@ -1,27 +1,12 @@
 // src/components/SignIn.js
 import React, { useEffect } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { supabase, createUserIfNotExists } from '../lib/supabaseClient';
 
 const SignIn = () => {
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN') {
-        const { data: existingUser } = await supabase
-          .from('users')
-          .select()
-          .eq('id', session.user.id)
-          .single();
-
-        if (!existingUser) {
-          const { error } = await supabase.from('users').insert({
-            id: session.user.id,
-            email: session.user.email,
-            username: session.user.user_metadata.full_name,
-            created_at: new Date().toISOString()
-          });
-
-          if (error) console.error('Error creating user:', error);
-        }
+        await createUserIfNotExists(session.user);
       }
     });
 

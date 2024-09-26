@@ -2,39 +2,37 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import Link from 'next/link';
+import { useUser } from '../hooks/useUser'; // We'll create this custom hook
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { user } = useUser(); // Use the custom hook to get the user
 
   useEffect(() => {
-    fetchBooks();
-  }, []);
+    if (user) {
+      fetchBooks(user.id);
+    }
+  }, [user]);
 
-  const fetchBooks = async () => {
+  const fetchBooks = async (userId) => {
     try {
       setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();//this probably does not need to be here
+      const { data, error } = await supabase
+        .from('books_with_latest_status')
+        .select(`
+          book_id,
+          title,
+          author,
+          status,
+          format,
+          current_page,
+          is_current_book`)
+        .eq('user_id', userId);
 
-      if (user) {
-        const { data, error } = await supabase
-          .from('books_with_latest_status')
-          .select(`
-            book_id,
-            title,
-            author,
-            status,
-            format,
-            current_page,
-            is_current_book`)
-          .eq('user_id', user.id)
-
-        if (error) throw error;
-        setBooks(data);
-      } else {
-        throw new Error('No user logged in');
-      }
+      if (error) throw error;
+      setBooks(data);
     } catch (error) {
       console.error('Error: ', error.message);
       setError(error.message);

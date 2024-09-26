@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { useRouter } from 'next/router';
+import { useUser } from '../hooks/useUser';
 
 export default function AddBook() {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const router = useRouter();
+  const { user, loading } = useUser();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,8 +27,11 @@ export default function AddBook() {
     const authorId = authorData.id;
 
     // Step 2: Get the current user's ID
-    const { data: { user } } = await supabase.auth.getUser();
-    const userId = user.id;
+    const userId = user?.id;
+    if (!userId) {
+      console.error('User not authenticated');
+      return;
+    }
 
     // Step 3: Insert book with user_id and author_id
     const { data: bookData, error: bookError } = await supabase

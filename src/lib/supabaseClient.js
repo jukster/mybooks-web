@@ -24,3 +24,33 @@ export async function updateBookStatus(bookId, statusId) {
     if (error) throw error
     return data
 }
+
+// user related functions
+
+export async function getUser(userId) {
+    const { data, error } = await supabase
+      .from('users')
+      .select('id', 'email')
+      .eq('id', userId)
+    if (error) throw error
+      return data 
+}
+
+export async function createUserIfNotExists(user) {
+    const { data: existingUser } = await supabase
+      .from('users')
+      .select()
+      .eq('id', user.id)
+      .single();
+
+    if (!existingUser) {
+      const { error } = await supabase.from('users').insert({
+        id: user.id,
+        email: user.email,
+        username: user.user_metadata.full_name,
+        created_at: new Date().toISOString()
+      });
+
+      if (error) console.error('Error creating user:', error);
+    }
+  };
