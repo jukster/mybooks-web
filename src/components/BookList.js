@@ -1,6 +1,6 @@
 // src/components/BookList.js
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../lib/supabaseClient';
 import Link from 'next/link';
 
 const BookList = () => {
@@ -15,13 +15,13 @@ const BookList = () => {
   const fetchBooks = async () => {
     try {
       setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: { user } } = await supabase.auth.getUser();//this probably does not need to be here
 
       if (user) {
         const { data, error } = await supabase
           .from('books_with_latest_status')
           .select(`
-            id,
+            book_id,
             title,
             author,
             status,
@@ -74,8 +74,8 @@ const BookList = () => {
           <h2 className="text-xl font-semibold mb-2">{status}</h2>
           <ul>
             {booksInStatus.map((book) => (
-              <li key={book.id} className="border-b p-2">
-                <Link href={`/books/${book.id}`}>
+              <li key={book.book_id} className="border-b p-2">
+                <Link href={`/books/${book.book_id}`}>
                   <span className="text-blue-600 hover:underline cursor-pointer">{book.title}</span>
                 </Link>
               </li>

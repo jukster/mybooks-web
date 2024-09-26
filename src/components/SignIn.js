@@ -1,6 +1,6 @@
 // src/components/SignIn.js
 import React, { useEffect } from 'react';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../lib/supabaseClient';
 
 const SignIn = () => {
   useEffect(() => {

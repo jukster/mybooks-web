@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { supabase } from '../../../supabaseClient';
+import { supabase } from '../../../lib/supabaseClient';
 import Link from 'next/link';
 
 const AcquireBook = () => {
@@ -38,16 +38,19 @@ const AcquireBook = () => {
     try {
       setLoading(true);
       
+      const bookId = parseInt(id, 10);
+      console.log(bookId); // Convert id to integer
+
       // Save the format in the book_formats table
       const { error: formatError } = await supabase
         .from('book_formats')
-        .insert({ book_id: id, format_id: selectedFormat });
+        .insert({ book_id: bookId, format_id: selectedFormat });
       if (formatError) throw formatError;
 
       // Update the book status to 2 (Acquired)
       const { error: statusError } = await supabase
         .from('book_status_history')
-        .insert({ book_id: id, status_id: 2 });
+        .insert({ book_id: bookId, status_id: 2 });
       if (statusError) throw statusError;
 
       router.push(`/books/${id}`);
