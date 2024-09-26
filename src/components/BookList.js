@@ -19,17 +19,16 @@ const BookList = () => {
 
       if (user) {
         const { data, error } = await supabase
-          .from('books')
+          .from('books_with_latest_status')
           .select(`
             id,
             title,
-            book_status_history(
-              status_id,
-              statuses(name)
-            )
-          `)
+            author,
+            status,
+            format,
+            current_page,
+            is_current_book`)
           .eq('user_id', user.id)
-          .order('id', { ascending: false }); // stopping here. Maybe fetch all and then get the right one client side?
 
         if (error) throw error;
         setBooks(data);
@@ -48,7 +47,7 @@ const BookList = () => {
   const groupBooksByStatus = () => {
     const groupedBooks = {};
     books.forEach((book) => {
-      const status = book.book_status_history[0]?.statuses.name || 'Unknown';
+      const status = book.status || 'Unknown';
       if (!groupedBooks[status]) {
         groupedBooks[status] = [];
       }
@@ -76,7 +75,9 @@ const BookList = () => {
           <ul>
             {booksInStatus.map((book) => (
               <li key={book.id} className="border-b p-2">
-                <span>{book.title}</span>
+                <Link href={`/books/${book.id}`}>
+                  <span className="text-blue-600 hover:underline cursor-pointer">{book.title}</span>
+                </Link>
               </li>
             ))}
           </ul>
