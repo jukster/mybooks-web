@@ -1,6 +1,6 @@
 // src/components/BookList.js
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { supabase, fetchBooks } from '../lib/supabaseClient';
 import Link from 'next/link';
 
 const BookList = ({ userId, firstName }) => {
@@ -10,26 +10,14 @@ const BookList = ({ userId, firstName }) => {
 
   useEffect(() => {
     if (userId) {
-      fetchBooks(userId);
+      fetchBooksData(userId, false);
     }
   }, [userId]);
 
-  const fetchBooks = async (userId) => {
+  const fetchBooksData = async (userId) => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from('books_with_latest_status')
-        .select(`
-          book_id,
-          title,
-          author,
-          status,
-          format,
-          current_page,
-          is_current_book`)
-        .eq('user_id', userId);
-
-      if (error) throw error;
+      const data = await fetchBooks(userId);
       setBooks(data);
     } catch (error) {
       console.error('Error: ', error.message);

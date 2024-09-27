@@ -2,6 +2,7 @@ import BookList from "../components/BookList";
 import SignIn from "../components/SignIn";
 import useAuth from "../hooks/useAuth";
 import dotenv from 'dotenv';
+import Link from 'next/link';
 
 dotenv.config();
 
@@ -19,6 +20,11 @@ function AuthenticatedView({ user, onSignOut }) {
       >
         Sign Out
       </button>
+      <Link href="/archive">
+        <span className="bg-blue-500 text-white p-2 rounded mb-4 cursor-pointer inline-block">
+          archive
+        </span>
+      </Link>
       <BookList userId={user.id} firstName={firstName} />
     </div>
   );

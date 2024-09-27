@@ -8,7 +8,7 @@ const statusActionsDictionary = {
   "Up Next": ["Start", "Summarise", "Archive"],
   "In Progress": ["Summarise", "Archive"],
   "To Summarise": ["Archive"],
-  "Archive": ["Up Next", "Start", "Summarise"],
+  "Archived": ["Up Next", "Start", "Summarise"],
 };
 
 const actionStatusIdDictionary = {

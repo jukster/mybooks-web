@@ -25,6 +25,32 @@ export async function updateBookStatus(bookId, statusId) {
     return data
 }
 
+export const fetchBooks = async (userId, archive = false) => {
+    let query = supabase
+      .from('books_with_latest_status')
+      .select(`
+        book_id,
+        title,
+        author,
+        status,
+        format,
+        current_page,
+        is_current_book,
+        status_id`)
+      .eq('user_id', userId);
+  
+    if (archive) {
+      query = query.eq('status_id', 5);
+    } else {
+      query = query.neq('status_id', 5);
+    }
+  
+    const { data, error } = await query;
+  
+    if (error) throw error;
+    return data || [];
+  };
+
 // user related functions
 
 export async function getUser(userId) {
