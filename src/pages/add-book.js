@@ -27,8 +27,10 @@ export default function AddBook() {
     const authorId = authorData.id;
 
     // Step 2: Get the current user's ID
-    const userId = user?.id;
-    if (!userId) {
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+    if (!user) {
       console.error('User not authenticated');
       return;
     }
@@ -36,7 +38,7 @@ export default function AddBook() {
     // Step 3: Insert book with user_id and author_id
     const { data: bookData, error: bookError } = await supabase
       .from('books')
-      .insert([{ title, user_id: userId, author_id: authorId }])
+      .insert([{ title, user_id: user.id, author_id: authorId }])
       .select('id')
       .single();
 
