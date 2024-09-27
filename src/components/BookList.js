@@ -1,6 +1,6 @@
 // src/components/BookList.js
 import React, { useState, useEffect } from 'react';
-import { supabase, fetchBooks } from '../lib/supabaseClient';
+import { fetchBooks } from '../lib/supabaseClient';
 import Link from 'next/link';
 
 const BookList = ({ userId, firstName }) => {
@@ -48,7 +48,7 @@ const BookList = ({ userId, firstName }) => {
       content += ` - ${book.format}`;
     }
     if (book.status === 'Physical' && book.page_number) {
-      content += `Currently on page (${book.page_number}`;
+      content += ` Currently on page (${book.page_number})`;
     }
     return content;
   };
@@ -58,7 +58,7 @@ const BookList = ({ userId, firstName }) => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl mb-4">{firstName}'s Book List</h1>
+      <h1 className="text-2xl mb-4">{firstName}&apos;s Book List</h1>
       <Link href="/add-book">
         <span className="bg-blue-500 text-white p-2 rounded mb-4 cursor-pointer inline-block">
           Add Book

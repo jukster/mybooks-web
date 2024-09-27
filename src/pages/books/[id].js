@@ -12,14 +12,9 @@ const BookDetail = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (id) {
-      fetchBookDetails();
-    }
-  }, [id]);
-
-  const fetchBookDetails = async () => {
-    try {
-      setLoading(true);
+    const fetchBookDetails = async () => {
+      try {
+        setLoading(true);
 
         const { data, error } = await supabase
           .from('books_with_latest_status')
@@ -30,13 +25,18 @@ const BookDetail = () => {
         if (error) throw error;
         setBook(data);
 
-    } catch (error) {
-      console.error('Error: ', error.message);
-      setError(error.message);
-    } finally {
-      setLoading(false);
+      } catch (error) {
+        console.error('Error: ', error.message);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchBookDetails();
     }
-  };
+  }, [id]);
 
   if (loading) return <div className="p-4">Loading...</div>;
   if (error) return <div className="p-4">Error: {error}</div>;

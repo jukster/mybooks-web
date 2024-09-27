@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useUser } from '../hooks/useUser';
 import { fetchBooks } from '../lib/supabaseClient';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 const Archive = () => {
