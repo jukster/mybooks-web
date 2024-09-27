@@ -53,6 +53,10 @@ const BookDetail = () => {
         <h2 className="text-xl font-semibold mb-2">Current Status</h2>
         <p>{book.status || 'Unknown'}</p>
       </div>
+      <div className="bg-gray-100 p-4 rounded-lg mb-4">
+        <h2 className="text-xl font-semibold mb-2">Format</h2>
+        <p>{book.format || 'Unknown'}</p>
+      </div>
       
       <BookActions book={book} />
     </div>

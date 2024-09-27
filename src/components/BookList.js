@@ -42,6 +42,17 @@ const BookList = ({ userId, firstName }) => {
 
   const groupedBooks = groupBooksByStatus();
 
+  const getBookRowContent = (book) => {
+    let content = `${book.title} by ${book.author}`;
+    if (book.status !== 'Wishlist') {
+      content += ` - ${book.format}`;
+    }
+    if (book.status === 'Physical' && book.page_number) {
+      content += `Currently on page (${book.page_number}`;
+    }
+    return content;
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -60,7 +71,7 @@ const BookList = ({ userId, firstName }) => {
             {booksInStatus.map((book) => (
               <li key={book.book_id} className="border-b p-2">
                 <Link href={`/books/${book.book_id}`}>
-                  <span className="text-blue-600 hover:underline cursor-pointer">{book.title}</span>
+                  <span className="text-blue-600 hover:underline cursor-pointer">{getBookRowContent(book)}</span>
                 </Link>
               </li>
             ))}
