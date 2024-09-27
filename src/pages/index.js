@@ -19,7 +19,7 @@ function AuthenticatedView({ user, onSignOut }) {
       >
         Sign Out
       </button>
-      <BookList firstName={firstName} />
+      <BookList userId={user.id} firstName={firstName} />
     </div>
   );
 }

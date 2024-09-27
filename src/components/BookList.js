@@ -2,19 +2,17 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import Link from 'next/link';
-import { useUser } from '../hooks/useUser'; // We'll create this custom hook
 
-const BookList = () => {
+const BookList = ({ userId, firstName }) => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { user } = useUser(); // Use the custom hook to get the user
 
   useEffect(() => {
-    if (user) {
-      fetchBooks(user.id);
+    if (userId) {
+      fetchBooks(userId);
     }
-  }, [user]);
+  }, [userId]);
 
   const fetchBooks = async (userId) => {
     try {
@@ -61,7 +59,7 @@ const BookList = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl mb-4">My Book List</h1>
+      <h1 className="text-2xl mb-4">{firstName}'s Book List</h1>
       <Link href="/add-book">
         <span className="bg-blue-500 text-white p-2 rounded mb-4 cursor-pointer inline-block">
           Add Book
