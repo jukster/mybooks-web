@@ -27,6 +27,9 @@ const BookList = ({ userId, firstName }) => {
     }
   };
 
+  // New constant for ordered statuses
+  const orderedStatuses = ['In Progress', 'To Summarise', 'Up Next', 'Wishlist'];
+
   // New function to group books by status
   const groupBooksByStatus = () => {
     const groupedBooks = {};
@@ -41,6 +44,16 @@ const BookList = ({ userId, firstName }) => {
   };
 
   const groupedBooks = groupBooksByStatus();
+
+  // New function to sort grouped books
+  const sortedGroupedBooks = () => {
+    return orderedStatuses
+      .filter(status => groupedBooks[status])
+      .reduce((acc, status) => {
+        acc[status] = groupedBooks[status];
+        return acc;
+      }, {});
+  };
 
   const getBookRowContent = (book) => {
     let content = `${book.title} by ${book.author}`;
@@ -58,13 +71,13 @@ const BookList = ({ userId, firstName }) => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl mb-4">{firstName}&apos;s Book List</h1>
+      <h1 className="text-2xl mb-4">{firstName}&apos;s Books</h1>
       <Link href="/add-book">
-        <span className="bg-blue-500 text-white p-2 rounded mb-4 cursor-pointer inline-block">
+        <span className="">
           Add Book
         </span>
       </Link>
-      {Object.entries(groupedBooks).map(([status, booksInStatus]) => (
+      {Object.entries(sortedGroupedBooks()).map(([status, booksInStatus]) => (
         <div key={status} className="mt-6">
           <h2 className="text-xl font-semibold mb-2">{status}</h2>
           <ul>
