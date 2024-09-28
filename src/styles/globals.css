@@ -1,2 +1,10 @@
-    /* src/globals.css */
-    @import "@picocss/pico/css/pico.min.css";
+/* src/globals.css */
+@import "@picocss/pico/css/pico.min.css";
+
+:root {
+    --pico-font-family: Helvetica, sans-serif;
+}
+
+a {
+    color: black;
+}

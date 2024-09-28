@@ -8,22 +8,16 @@ dotenv.config();
 
 // Component for authenticated view
 function AuthenticatedView({ user, onSignOut }) {
-
   const firstName = user.user_metadata.full_name?.split(' ')[0] || 'User';
 
   return (
     <div>
-      <div>{user.user_metadata.email}</div>
-      <button 
-        onClick={onSignOut}
-      >
-        Sign Out
-      </button>
-      <Link href="/archive">
-        <span>
-          archive
-        </span>
-      </Link>
+      <nav className="container-fluid">
+        <ul>
+          <li><Link href="/archive">Archive</Link></li>
+          <li ><Link href="#" onClick={onSignOut}>Sign Out</Link></li>
+        </ul>
+      </nav>
       <BookList userId={user.id} firstName={firstName} />
     </div>
   );

@@ -72,11 +72,6 @@ const BookList = ({ userId, firstName }) => {
   return (
     <div>
       <h1>{firstName}&apos;s Books</h1>
-      <Link href="/add-book">
-        <span>
-          Add Book
-        </span>
-      </Link>
       {Object.entries(sortedGroupedBooks()).map(([status, booksInStatus]) => (
         <div key={status} >
           <h2>{status}</h2>
@@ -91,6 +86,11 @@ const BookList = ({ userId, firstName }) => {
           </ul>
         </div>
       ))}
+      <Link href="/add-book">
+        <span>
+          Add Book
+        </span>
+      </Link>
     </div>
   );
 };
