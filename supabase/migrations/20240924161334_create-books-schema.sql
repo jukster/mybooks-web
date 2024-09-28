@@ -54,7 +54,7 @@
 
     -- Insert initial data into formats table
     INSERT INTO formats (name) VALUES
-    ('Physical'),
+    ('Real Book'),
     ('Kindle'),
     ('Kobo'),
     ('eBook');

@@ -1,10 +1,8 @@
 import BookList from "../components/BookList";
 import SignIn from "../components/SignIn";
 import useAuth from "../hooks/useAuth";
-import dotenv from 'dotenv';
 import Link from 'next/link';
 
-dotenv.config();
 
 // Component for authenticated view
 function AuthenticatedView({ user, onSignOut }) {
@@ -12,13 +10,16 @@ function AuthenticatedView({ user, onSignOut }) {
 
   return (
     <div>
-      <nav className="container-fluid">
-        <ul>
-          <li><Link href="/archive">Archive</Link></li>
-          <li ><Link href="#" onClick={onSignOut}>Sign Out</Link></li>
-        </ul>
-      </nav>
       <BookList userId={user.id} firstName={firstName} />
+      <div>
+        <Link href="/archive">Archive</Link>
+      </div>
+      <div>
+        <Link href="#" onClick={onSignOut}>Sign Out</Link>
+      </div>
+      <div>
+        <Link href="/add-book">Add Book</Link>
+      </div>
     </div>
   );
 }
@@ -27,7 +28,7 @@ function AuthenticatedView({ user, onSignOut }) {
 function UnauthenticatedView() {
   return (
     <div>
-      <h1>Not authenticated</h1>
+      <h1>mybooks</h1>
       <SignIn />
     </div>
   );

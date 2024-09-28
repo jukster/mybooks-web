@@ -31,11 +31,16 @@ const SignIn = () => {
 
   return (
     <div>
-      <button
-        onClick={signInWithGoogle}
+      <a
+        href="#"
+        onClick={(e) => {
+          e.preventDefault();
+          signInWithGoogle();
+        }}
+
       >
         Sign in with Google
-      </button>
+      </a>
     </div>
   );
 };

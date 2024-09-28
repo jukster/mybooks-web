@@ -51,6 +51,55 @@ export const fetchBooks = async (userId, archive = false) => {
     return data || [];
   };
 
+  export async function updateCurrentPage(bookId, pageNumber) {
+    if (!Number.isInteger(pageNumber) || pageNumber < 0) {
+      throw new Error('Page number must be a non-negative integer');
+    }
+  
+    const { data, error } = await supabase
+      .from('physical_books')
+      .update({ current_page: pageNumber })
+      .eq('book_id', bookId);
+  
+    if (error) throw error;
+    return data;
+  }
+
+  export const fetchBook = async (bookId) => {
+    const { data, error } = await supabase
+      .from('books_with_latest_status')
+      .select()
+      .eq('book_id', bookId)
+      .single();
+  
+    if (error) {
+      throw error;
+    }
+  
+    return data;
+  };
+
+  export const acquireBook = async (bookId, formatId) => {
+    // Save the format in the book_formats table
+    const { error: formatError } = await supabase
+      .from('book_formats')
+      .insert({ book_id: bookId, format_id: formatId });
+    if (formatError) throw formatError;
+  
+    // Update the book status to 2 (Acquired)
+    const { error: statusError } = await supabase
+      .from('book_status_history')
+      .insert({ book_id: bookId, status_id: 2 });
+    if (statusError) throw statusError;
+
+    // Add a new entry to physical books table if this is the format
+    const { physicalError } = await supabase
+          .from('physical_books')
+          .insert({ book_id: bookId, current_page: 0, is_current_book: false })
+
+        if (formatError) throw physicalError
+  };
+
 // user related functions
 
 export async function getUser(userId) {
@@ -80,3 +129,4 @@ export async function createUserIfNotExists(user) {
       if (error) console.error('Error creating user:', error);
     }
   };
+

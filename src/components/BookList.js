@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchBooks } from '../lib/supabaseClient';
 import Link from 'next/link';
+import { formatBookInfo } from '../book_representation';
 
 const BookList = ({ userId, firstName }) => {
   const [books, setBooks] = useState([]);
@@ -55,17 +56,6 @@ const BookList = ({ userId, firstName }) => {
       }, {});
   };
 
-  const getBookRowContent = (book) => {
-    let content = `${book.title} by ${book.author}`;
-    if (book.status !== 'Wishlist') {
-      content += ` - ${book.format}`;
-    }
-    if (book.status === 'Physical' && book.page_number) {
-      content += ` Currently on page (${book.page_number})`;
-    }
-    return content;
-  };
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -79,18 +69,13 @@ const BookList = ({ userId, firstName }) => {
             {booksInStatus.map((book) => (
               <li key={book.book_id} >
                 <Link href={`/books/${book.book_id}`}>
-                  <span>{getBookRowContent(book)}</span>
+                  <span>{formatBookInfo(book)}</span>
                 </Link>
               </li>
             ))}
           </ul>
         </div>
       ))}
-      <Link href="/add-book">
-        <span>
-          Add Book
-        </span>
-      </Link>
     </div>
   );
 };

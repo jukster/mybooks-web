@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabaseClient';
+import { fetchBook } from '../../lib/supabaseClient';
 import Link from 'next/link';
 import BookActions from '../../components/BookActions';
 
@@ -12,19 +12,11 @@ const BookDetail = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchBookDetails = async () => {
+    const getBookDetails = async () => {
       try {
         setLoading(true);
-
-        const { data, error } = await supabase
-          .from('books_with_latest_status')
-          .select()
-          .eq('book_id', id)
-          .single();
-
-        if (error) throw error;
+        const data = await fetchBook(id);
         setBook(data);
-
       } catch (error) {
         console.error('Error: ', error.message);
         setError(error.message);
@@ -34,7 +26,7 @@ const BookDetail = () => {
     };
 
     if (id) {
-      fetchBookDetails();
+      getBookDetails();
     }
   }, [id]);
 
@@ -47,17 +39,17 @@ const BookDetail = () => {
       <Link href="/">
         <span>← Back to Book List</span>
       </Link>
-      <h1>{book.title}</h1>
-      <p>by {book.author}</p>
+      <h1>{book.title} by {book.author}</h1>
       <div>
-        <h2>Current Status</h2>
-        <p>{book.status || 'Unknown'}</p>
+        {book.status || 'Unknown'}
       </div>
       <div>
-        <h2>Format</h2>
-        <p>{book.format || 'Unknown'}</p>
-      </div>
+
+      {book.format || 'Unknown'}
       
+      
+      </div>
+      <p></p>
       <BookActions book={book} />
     </div>
   );

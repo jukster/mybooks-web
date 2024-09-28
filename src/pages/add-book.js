@@ -85,9 +85,9 @@ export default function AddBook() {
             required
           />
         </div>
-        <button type="submit">
+        <a href="#" onClick={handleSubmit} role="button">
           Add Book
-        </button>
+        </a>
       </form>
     </div>
   );

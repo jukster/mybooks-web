@@ -35,25 +35,35 @@ export default function BookActions({ book }) {
     }
   };
 
+  const actions = [...statusActionsDictionary[book.status]];
+  if (book.status === "In Progress" && book.format === "Real Book") {
+    actions.push("Mark Page");
+  }
+
   return (
     <div>
-      {statusActionsDictionary[book.status].map((action) => (
-        action === "Acquire" ? (
+      {actions.map((action) => (
+        <div key={action}>
           <Link
-            key={action}
-            href={`/books/${book.book_id}/acquire`}
+            href={
+              action === "Acquire" ? `/books/${book.book_id}/acquire` :
+              action === "Mark Page" ? `/books/${book.book_id}/mark-page` :
+              '#'
+            }
+            onClick={
+              action !== "Acquire" && action !== "Mark Page" 
+                ? (e) => {
+                    e.preventDefault();
+                    handleStatusChange(action);
+                  } 
+                : undefined
+            }
+            className={isLoading ? 'disabled' : ''}
+            aria-disabled={isLoading}
           >
             {action}
           </Link>
-        ) : (
-          <button
-            key={action}
-            onClick={() => handleStatusChange(action)}
-            disabled={isLoading}
-          >
-            {action}
-          </button>
-        )
+        </div>
       ))}
     </div>
   );

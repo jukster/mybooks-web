@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useUser } from '../hooks/useUser';
 import { fetchBooks } from '../lib/supabaseClient';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const Archive = () => {
   const [books, setBooks] = useState([]);
@@ -46,6 +47,9 @@ const Archive = () => {
 
   return (
     <div>
+    <Link href="/">
+        <span>← Back to Book List</span>
+      </Link>
       <h1>Book Archive</h1>
       <input
         type="text"
