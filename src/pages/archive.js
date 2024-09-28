@@ -41,24 +41,22 @@ const Archive = () => {
     router.push(`/books/${bookId}`);
   };
 
-  if (loading) return <div className="p-4">Loading...</div>;
-  if (!user) return <div className="p-4">Please sign in to view your archive.</div>;
+  if (loading) return <div>Loading...</div>;
+  if (!user) return <div>Please sign in to view your archive.</div>;
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Book Archive</h1>
+    <div>
+      <h1>Book Archive</h1>
       <input
         type="text"
         placeholder="Search books or authors"
         value={searchTerm}
         onChange={handleSearch}
-        className="w-full p-2 mb-4 border rounded"
       />
       <ul>
         {filteredBooks.map((book) => (
-          <li key={book.book_id} className="mb-2">
+          <li key={book.book_id}>
             <span
-              className="text-blue-600 hover:underline cursor-pointer"
               onClick={() => handleBookClick(book.book_id)}
             >
               {book.title} by {book.author}

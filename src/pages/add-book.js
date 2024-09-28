@@ -62,32 +62,30 @@ export default function AddBook() {
     router.push('/'); // Redirect to the book list page
   };
   return (
-    <div className="p-4">
-      <h1 className="text-2xl mb-4">Add a New Book</h1>
+    <div>
+      <h1>Add a New Book</h1>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="title" className="block mb-2">Title:</label>
+        <div>
+          <label htmlFor="title">Title:</label>
           <input
             type="text"
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="border p-2 w-full"
             required
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="author" className="block mb-2">Author:</label>
+        <div>
+          <label htmlFor="author">Author:</label>
           <input
             type="text"
             id="author"
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
-            className="border p-2 w-full"
             required
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+        <button type="submit">
           Add Book
         </button>
       </form>

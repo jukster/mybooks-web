@@ -30,10 +30,9 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div>
       <button
         onClick={signInWithGoogle}
-        className="bg-red-500 text-white p-4 rounded"
       >
         Sign in with Google
       </button>

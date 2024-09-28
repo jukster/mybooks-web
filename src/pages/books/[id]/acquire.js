@@ -62,20 +62,20 @@ const AcquireBook = () => {
     }
   };
 
-  if (loading) return <div className="p-4">Loading...</div>;
-  if (error) return <div className="p-4">Error: {error}</div>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="p-4">
+    <div>
       <Link href={`/books/${id}`}>
-        <span className="text-blue-500 hover:underline cursor-pointer">← Back to Book Details</span>
+        <span>← Back to Book Details</span>
       </Link>
-      <h1 className="text-3xl font-bold mt-4 mb-2">Acquire Book</h1>
+      <h1>Acquire Book</h1>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <h2 className="text-xl font-semibold mb-2">Select Format</h2>
+        <div>
+          <h2>Select Format</h2>
           {formats.map((format) => (
-            <div key={format.id} className="mb-2">
+            <div key={format.id}>
               <input
                 type="radio"
                 id={`format-${format.id}`}
@@ -83,7 +83,6 @@ const AcquireBook = () => {
                 value={format.id}
                 checked={selectedFormat === format.id}
                 onChange={(e) => setSelectedFormat(e.target.value)}
-                className="mr-2"
               />
               <label htmlFor={`format-${format.id}`}>{format.name}</label>
             </div>
@@ -91,7 +90,6 @@ const AcquireBook = () => {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           disabled={!selectedFormat}
         >
           Confirm Acquisition

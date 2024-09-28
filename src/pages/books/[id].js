@@ -38,23 +38,23 @@ const BookDetail = () => {
     }
   }, [id]);
 
-  if (loading) return <div className="p-4">Loading...</div>;
-  if (error) return <div className="p-4">Error: {error}</div>;
-  if (!book) return <div className="p-4">Book not found</div>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!book) return <div>Book not found</div>;
 
   return (
-    <div className="p-4">
+    <div>
       <Link href="/">
-        <span className="text-blue-500 hover:underline cursor-pointer">← Back to Book List</span>
+        <span>← Back to Book List</span>
       </Link>
-      <h1 className="text-3xl font-bold mt-4 mb-2">{book.title}</h1>
-      <p className="text-xl mb-4">by {book.author}</p>
-      <div className="bg-gray-100 p-4 rounded-lg mb-4">
-        <h2 className="text-xl font-semibold mb-2">Current Status</h2>
+      <h1>{book.title}</h1>
+      <p>by {book.author}</p>
+      <div>
+        <h2>Current Status</h2>
         <p>{book.status || 'Unknown'}</p>
       </div>
-      <div className="bg-gray-100 p-4 rounded-lg mb-4">
-        <h2 className="text-xl font-semibold mb-2">Format</h2>
+      <div>
+        <h2>Format</h2>
         <p>{book.format || 'Unknown'}</p>
       </div>
       

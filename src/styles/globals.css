@@ -1,4 +1,2 @@
     /* src/globals.css */
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
+    @import "@picocss/pico/css/pico.min.css";

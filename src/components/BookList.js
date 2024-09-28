@@ -70,21 +70,21 @@ const BookList = ({ userId, firstName }) => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl mb-4">{firstName}&apos;s Books</h1>
+    <div>
+      <h1>{firstName}&apos;s Books</h1>
       <Link href="/add-book">
-        <span className="">
+        <span>
           Add Book
         </span>
       </Link>
       {Object.entries(sortedGroupedBooks()).map(([status, booksInStatus]) => (
-        <div key={status} className="mt-6">
-          <h2 className="text-xl font-semibold mb-2">{status}</h2>
+        <div key={status} >
+          <h2>{status}</h2>
           <ul>
             {booksInStatus.map((book) => (
-              <li key={book.book_id} className="border-b p-2">
+              <li key={book.book_id} >
                 <Link href={`/books/${book.book_id}`}>
-                  <span className="text-blue-600 hover:underline cursor-pointer">{getBookRowContent(book)}</span>
+                  <span>{getBookRowContent(book)}</span>
                 </Link>
               </li>
             ))}
