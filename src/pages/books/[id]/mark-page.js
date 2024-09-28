@@ -7,8 +7,6 @@ export default function MarkPage() {
   const [currentPage, setCurrentPage] = useState('');
   const router = useRouter();
   const { id } = router.query;
-  const [isLoading, setIsLoading] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     if (id) loadBook();
